@@ -8,9 +8,11 @@
 
 import * as React from "react";
 import MyWoodMap from "./mywoodmap";
+import Overlay from "./overlay";
 
 const MyWood = () => (
     <div>
+        <Overlay />
         <MyWoodMap />
     </div>
 );
