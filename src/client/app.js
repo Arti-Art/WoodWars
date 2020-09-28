@@ -8,6 +8,8 @@
 
 import * as React from "react";
 import ReactDOM from "react-dom";
+import "./styles/normalize.css";
+import "./styles/responsive.css";
 import "./styles/main.css";
 import MyWood from "./components/mywood";
 
