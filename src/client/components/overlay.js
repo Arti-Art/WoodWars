@@ -9,11 +9,10 @@ class Overlay extends React.Component {
     constructor() {
         super();
         this.state = {showLoginModal: true};
-        // this.handleChange = this.handleChange.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
     }
-
-    handleClick() {
-        console.log("it still Works");
+    toggleModal() {
+        this.setState({showLoginModal: !this.state.showLoginModal});
     }
     // handleChange(event) {
     //     const {name, value} = event.target;
@@ -27,15 +26,17 @@ class Overlay extends React.Component {
                 <TopBar />
                 <Button
                     value="Log In"
-                    onClick={this.handleClick}
+                    toggleModal={this.toggleModal}
                     className="button-login"
                 />
                 <Button
                     value="Sign Up"
-                    onClick={this.handleClick}
+                    toggleModal={this.toggleModal}
                     className="button-signup"
                 />
-                {this.state.showLoginModal && <LoginModal />}
+                {this.state.showLoginModal && (
+                    <LoginModal toggleModal={this.toggleModal} />
+                )}
             </div>
         );
     }

@@ -7,9 +7,6 @@ class LoginModal extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
     handleChange(event) {
-        console.log(
-            `email: ${this.state.email}, password: ${this.state.password}`,
-        );
         const {name, value} = event.target;
         this.setState({
             [name]: value,
@@ -47,7 +44,7 @@ class LoginModal extends React.Component {
                 <input
                     type="button"
                     value="close"
-                    onClick={this.handleClick}
+                    onClick={this.props.toggleModal}
                     className="button"
                 />
             </div>
