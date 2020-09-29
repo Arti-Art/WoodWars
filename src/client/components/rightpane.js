@@ -1,10 +1,10 @@
 import React from "react";
 
-function RightPane() {
+function RightPane(props) {
     return (
         <div id="right-pane">
             <h2>Right Pane</h2>
-            <p>Some info</p>
+            <button type="button" value="Log In" onClick={props.onClick} />
             <p>Some other info</p>
         </div>
     );

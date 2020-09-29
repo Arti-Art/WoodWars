@@ -1,23 +1,41 @@
 import React from "react";
 import TopBar from "./topbar";
-import RightPane from "./rightpane";
+import RightPane from "./rightpane"; // DELETE THIS JS IF NOT USED
 import LoginModal from "./loginmodal";
+import Button from "./button";
 import "../styles/overlay.css";
 
 class Overlay extends React.Component {
     constructor() {
         super();
         this.state = {showLoginModal: true};
+        // this.handleChange = this.handleChange.bind(this);
     }
+
     handleClick() {
-        console.log("it Works");
+        console.log("it still Works");
     }
+    // handleChange(event) {
+    //     const {name, value} = event.target;
+    //     this.setState({
+    //         [name]: value,
+    //     });
+    // }
     render() {
         return (
             <div id="overlay">
                 <TopBar />
-                {this.state.showLoginModal ? <LoginModal onClick={this.handleClick} /> : "" }
-                <RightPane />
+                <Button
+                    value="Log In"
+                    onClick={this.handleClick}
+                    className="button-login"
+                />
+                <Button
+                    value="Sign Up"
+                    onClick={this.handleClick}
+                    className="button-signup"
+                />
+                {this.state.showLoginModal && <LoginModal />}
             </div>
         );
     }
