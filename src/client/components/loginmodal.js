@@ -18,6 +18,7 @@ class LoginModal extends React.Component {
     render() {
         return (
             <div id="login-modal">
+                <h2>{process.env.DB_USER}</h2>
                 <input
                     type="text"
                     name="email"

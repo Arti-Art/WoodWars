@@ -9,7 +9,8 @@
 import express from "express";
 import path from "path";
 
-const {APP_PORT} = process.env;
+const {APP_PORT, DB_USER} = process.env;
+console.log(`${DB_USER} very much`);
 
 const app = express();
 
