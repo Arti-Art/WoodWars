@@ -13,10 +13,12 @@ function MyWoodMap() {
         iconSize: [38, 50],
     });
     return (
-        <Map id="leafletContainer" center={[50.6283, 5.5768]} zoom={16}>
+        <Map id={"leafletContainer"} center={[50.6283, 5.5768]} zoom={16}>
             <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                url={"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"}
+                attribution={
+                    '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                }
             />
             {arbustum.map(tree => (
                 <Marker
