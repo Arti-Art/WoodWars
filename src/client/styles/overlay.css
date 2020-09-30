@@ -26,7 +26,7 @@
     flex-direction: column;
     align-items: center;
     width: 400px;
-    height: 200px;
+    height: 300px;
     border: 3px solid gray;
     border-radius: 15px;
     background-color: rgb(204, 255, 175);
@@ -42,20 +42,12 @@
     display: flex;
     justify-content: center;
 }
-#color-selector a {
-    line-height: 34px;
-    padding-left: 5px;
-}
-#color-tile {
-    width: 25px;
-    height: 25px;
-    border: 2px solid gray;
-    border-radius: 3px;
-    margin-right: 5px;
-    align-self: center;
+#color-selector p {
+    line-height: 30px;
 }
 #color-input {
-    width: 90px;
+    height: 30px;
+    width: 70px;
 }
 /* <<<<< LOGIN-MODAL ///// */
 

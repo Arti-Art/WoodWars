@@ -3,8 +3,14 @@ import React from "react";
 class LoginModal extends React.Component {
     constructor() {
         super();
-        this.state = {email: "", password: "", color: "FFFFFF"};
+        this.state = {
+            showSignup: false,
+            email: "",
+            password: "",
+            color: "#FF0000",
+        };
         this.handleChange = this.handleChange.bind(this);
+        this.toggleSignup = this.toggleSignup.bind(this);
     }
     handleChange(event) {
         const {name, value} = event.target;
@@ -12,13 +18,18 @@ class LoginModal extends React.Component {
             [name]: value,
         });
     }
+    toggleSignup() {
+        this.setState({
+            showSignup: !this.state.showSignup,
+        });
+    }
     handleClick() {
         console.log("the Class based component method handleClick works");
     }
     render() {
-        const colorTileStyle = {backgroundColor: `#${this.state.color}`};
         return (
             <div id="login-modal">
+                <h2>{this.state.showSignup ? "Sign Up" : "Log In"}</h2>
                 <input
                     type="text"
                     name="email"
@@ -38,29 +49,18 @@ class LoginModal extends React.Component {
                     minLength="4"
                     required
                 />
-                <div id="color-selector">
-                    <div id="color-tile" style={colorTileStyle}></div>
-                    <input
-                        id="color-input"
-                        type="text"
-                        name="color"
-                        value={this.state.color}
-                        onChange={this.handleChange}
-                        maxLength="6"
-                    />
-                    <input
-                        type="color"
-                        id="favcolor"
-                        name="favcolor"
-                        value="#ff0000"
-                    />
-                    {/* <a
-                        href="https://www.google.com/search?q=color+picker"
-                        target="_blank"
-                        rel="noreferrer">
-                        choose color
-                    </a> */}
-                </div>
+                {this.state.showSignup && (
+                    <div id="color-selector">
+                        <p>pick a color :&nbsp;</p>
+                        <input
+                            type="color"
+                            id="color-input"
+                            name="color"
+                            value={this.state.color}
+                            onChange={this.handleChange}
+                        />
+                    </div>
+                )}
                 <div id="loginmodal-buttons">
                     <input
                         type="button"
@@ -75,46 +75,30 @@ class LoginModal extends React.Component {
                         className="button"
                     />
                 </div>
+                {this.state.showSignup ? (
+                    <div>
+                        <p>Already have an account?</p>
+                        <input
+                            type="button"
+                            value="Log In"
+                            onClick={this.toggleSignup}
+                            className="button"
+                        />
+                    </div>
+                ) : (
+                    <div>
+                        <p>No account yet?</p>
+                        <input
+                            type="button"
+                            value="Sign Up"
+                            onClick={this.toggleSignup}
+                            className="button"
+                        />
+                    </div>
+                )}
             </div>
         );
     }
 }
-
-// function LoginModal(props) {
-//     return (
-//         <div id="login-modal">
-//             <input
-//                 type="text"
-//                 name="email"
-//                 placeholder="e-mail"
-//                 value={props.value.email}
-//                 onChange={props.onChange}
-//                 required
-//             />
-//             <input
-//                 type="password"
-//                 name="password"
-//                 placeholder="password"
-//                 value={props.value.password}
-//                 onChange={props.onChange}
-//                 minLength="4"
-//                 required
-//             />
-//             <br />
-//             <input
-//                 type="button"
-//                 value="LOG IN"
-//                 onClick={props.onClick}
-//                 className="button"
-//             />
-//             <input
-//                 type="button"
-//                 value="close"
-//                 onClick={props.handleModal}
-//                 className="button"
-//             />
-//         </div>
-//     );
-// }
 
 export default LoginModal;

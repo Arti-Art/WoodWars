@@ -22,11 +22,6 @@ class Overlay extends React.Component {
                     toggleModal={this.toggleModal}
                     className="button-login"
                 />
-                <Button
-                    value="Sign Up"
-                    toggleModal={this.toggleModal}
-                    className="button-signup"
-                />
                 {this.state.showLoginModal && (
                     <LoginModal toggleModal={this.toggleModal} />
                 )}

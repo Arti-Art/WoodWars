@@ -1,7 +1,7 @@
 import React from "react";
 import {Map, Marker, Popup, TileLayer} from "react-leaflet";
 import L from "leaflet";
-import arbustum from "../../../data/arbustums.json";
+import arbustum from "../../../data/arbustums02.json";
 import "../styles/map.css";
 import treeImg from "./img/treeImg.png";
 
