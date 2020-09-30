@@ -48,6 +48,18 @@ class LoginModal extends React.Component {
                         onChange={this.handleChange}
                         maxLength="6"
                     />
+                    <input
+                        type="color"
+                        id="favcolor"
+                        name="favcolor"
+                        value="#ff0000"
+                    />
+                    {/* <a
+                        href="https://www.google.com/search?q=color+picker"
+                        target="_blank"
+                        rel="noreferrer">
+                        choose color
+                    </a> */}
                 </div>
                 <div id="loginmodal-buttons">
                     <input
