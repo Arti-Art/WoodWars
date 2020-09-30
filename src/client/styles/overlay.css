@@ -65,4 +65,9 @@ button, .button {
     display: block;
     margin: 0 auto;
 }
+#color-tile {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+}
 /* <<<<< LOGIN-MODAL ///// */

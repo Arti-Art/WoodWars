@@ -3,7 +3,7 @@ import React from "react";
 class LoginModal extends React.Component {
     constructor() {
         super();
-        this.state = {email: "", password: ""};
+        this.state = {email: "", password: "", color: ""};
         this.handleChange = this.handleChange.bind(this);
     }
     handleChange(event) {
@@ -16,9 +16,9 @@ class LoginModal extends React.Component {
         console.log("the Class based component method handleClick works");
     }
     render() {
+        const style = {color: this.state.color};
         return (
             <div id="login-modal">
-                <h2>{process.env.DB_USER}</h2>
                 <input
                     type="text"
                     name="email"
@@ -35,6 +35,17 @@ class LoginModal extends React.Component {
                     onChange={this.handleChange}
                     minLength="4"
                     required
+                />
+                <div id="color-tile" style={style}>
+                    Test
+                </div>
+                <input
+                    type="text"
+                    name="color"
+                    placeholder="your color (use Hex value)"
+                    value={this.state.color}
+                    onChange={this.handleChange}
+                    maxLength="6"
                 />
                 <input
                     type="button"
