@@ -8,11 +8,15 @@
 
 import express from "express";
 import path from "path";
+import connectDB from "./config/db";
 
 const {APP_PORT, DB_USER} = process.env;
 console.log(`${DB_USER} very much`);
 
 const app = express();
+
+// CONNECT DATABASE
+connectDB();
 
 app.use(express.static(path.resolve(__dirname, "../../bin/client")));
 
