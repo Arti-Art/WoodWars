@@ -21,9 +21,18 @@ function MyWoodMap() {
             {arbustum.map(tree => (
                 <Marker
                     icon={treeIcon}
-                    key={tree.y_lambert72}
-                    position={[tree.geoloc.lat, tree.geoloc.lon]}
-                />
+                    key={tree.x_lambert72}
+                    position={[tree.geoloc.lat, tree.geoloc.lon]}>
+                    <Popup>
+                        <strong>Name :</strong> {tree.nom_complet} <br />
+                        <strong>Hauteur :</strong>{" "}
+                        {tree.hauteur_totale || "unavailable"} <br />
+                        <strong>Diametre :</strong>{" "}
+                        {tree.diametre_cime || "unavailable"} <br />
+                        <strong>Circonférence :</strong>{" "}
+                        {tree.circonf || "unavailable"}
+                    </Popup>
+                </Marker>
             ))}
         </Map>
     );

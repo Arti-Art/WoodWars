@@ -1,6 +1,5 @@
 import React from "react";
 import TopBar from "./topbar";
-import RightPane from "./rightpane"; // DELETE THIS JS IF NOT USED
 import LoginModal from "./loginmodal";
 import Button from "./button";
 import "../styles/overlay.css";
@@ -14,12 +13,6 @@ class Overlay extends React.Component {
     toggleModal() {
         this.setState({showLoginModal: !this.state.showLoginModal});
     }
-    // handleChange(event) {
-    //     const {name, value} = event.target;
-    //     this.setState({
-    //         [name]: value,
-    //     });
-    // }
     render() {
         return (
             <div id="overlay">
