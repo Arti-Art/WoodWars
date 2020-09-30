@@ -20,16 +20,40 @@
 }
 /* <<<<< TOP-BAR ///// */
 
-/* DELETE RIGHT PANE??? */
-/* ///// RIGHT-PANE >>>>> */
-#right-pane {
-    top: 0;
-    right: 0;
-    width: 300px; 
-    height: 100vh;
-    background-color: rgba(255, 196, 128, 0.589);
+/* ///// LOGIN-MODAL >>>>> */
+#login-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+    height: 200px;
+    border: 3px solid gray;
+    border-radius: 15px;
+    background-color: rgb(204, 255, 175);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px 15px;
 }
-/* <<<<< RIGHT-PANE ///// */
+#login-modal-id, #login-modal-email {
+    width: 200px;
+}
+#color-selector {
+    display: flex;
+    justify-content: center;
+}
+#color-tile {
+    width: 25px;
+    height: 25px;
+    border: 2px solid gray;
+    border-radius: 3px;
+    margin-right: 5px;
+    align-self: center;
+}
+#color-input {
+    width: 90px;
+}
+/* <<<<< LOGIN-MODAL ///// */
 
 /* ///// BUTTONS >>>>> */
 .button-login {
@@ -47,31 +71,20 @@ button, .button {
     background-color: rgb(0, 97, 76);
     color: white;
 }
+#loginmodal-buttons {
+    display: flex;
+    justify-content: center;
+}
 /* <<<<< BUTTONS ///// */
 
-/* ///// LOGIN-MODAL >>>>> */
-#login-modal {
-    width: 400px;
-    height: 200px;
-    border: 3px solid gray;
-    border-radius: 15px;
-    background-color: rgb(204, 255, 175);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px 15px;
-}
 
-#color-tile {
-    display: inline-block;
-    width: 25px;
-    height: 25px;
-    border: 2px solid gray;
-    border-radius: 3px;
-    padding-top: 5px;
-}
-#color-input {
-    display: inline-block;
-    width: 90px;
-}
-/* <<<<< LOGIN-MODAL ///// */
+/* DELETE RIGHT PANE */
+/* ///// RIGHT-PANE >>>>> */
+/* #right-pane {
+    top: 0;
+    right: 0;
+    width: 300px; 
+    height: 100vh;
+    background-color: rgba(255, 196, 128, 0.589);
+} */
+/* <<<<< RIGHT-PANE ///// */

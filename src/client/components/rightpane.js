@@ -1,3 +1,5 @@
+// TO DELETE LATER
+
 import React from "react";
 
 function RightPane(props) {

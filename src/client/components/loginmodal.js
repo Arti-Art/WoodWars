@@ -22,6 +22,7 @@ class LoginModal extends React.Component {
                 <input
                     type="text"
                     name="email"
+                    id="login-modal-id"
                     placeholder="e-mail"
                     value={this.state.email}
                     onChange={this.handleChange}
@@ -30,6 +31,7 @@ class LoginModal extends React.Component {
                 <input
                     type="password"
                     name="password"
+                    id="login-modal-email"
                     placeholder="password"
                     value={this.state.password}
                     onChange={this.handleChange}
@@ -47,18 +49,20 @@ class LoginModal extends React.Component {
                         maxLength="6"
                     />
                 </div>
-                <input
-                    type="button"
-                    value="LOG IN"
-                    onClick={this.handleClick}
-                    className="button"
-                />
-                <input
-                    type="button"
-                    value="close"
-                    onClick={this.props.toggleModal}
-                    className="button"
-                />
+                <div id="loginmodal-buttons">
+                    <input
+                        type="button"
+                        value="LOG IN"
+                        onClick={this.handleClick}
+                        className="button"
+                    />
+                    <input
+                        type="button"
+                        value="close"
+                        onClick={this.props.toggleModal}
+                        className="button"
+                    />
+                </div>
             </div>
         );
     }
