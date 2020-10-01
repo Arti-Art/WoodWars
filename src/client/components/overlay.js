@@ -38,6 +38,9 @@ class Overlay extends React.Component {
     render() {
         return (
             <div id="overlay">
+                {this.state.showLoginModal && (
+                    <div id="darken-map" onClick={this.toggleModal} />
+                )}
                 <TopBar />
                 {!this.state.showLoginModal && (
                     <Button
