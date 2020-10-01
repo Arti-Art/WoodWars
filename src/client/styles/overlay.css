@@ -71,6 +71,13 @@ button, .button {
     display: flex;
     justify-content: center;
 }
+#toggle-signup-group {
+    margin: 10px;
+}
+#toggle-signup {
+    display: block;
+    margin: 10px auto;
+}
 /* <<<<< BUTTONS ///// */
 
 
