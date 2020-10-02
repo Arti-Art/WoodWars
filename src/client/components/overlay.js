@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import TopBar from "./topbar";
 import LoginModal from "./loginmodal";
 import Button from "./button";
@@ -17,6 +18,12 @@ class Overlay extends React.Component {
         this.toggleModal = this.toggleModal.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.toggleSignup = this.toggleSignup.bind(this);
+    }
+    componentDidMount() {
+        console.log("component did mount");
+        axios.get(`https://jsonplaceholder.typicode.com/posts`).then(res => {
+            res.data.map(x => console.log(x));
+        });
     }
     toggleModal() {
         this.setState({showLoginModal: !this.state.showLoginModal});
