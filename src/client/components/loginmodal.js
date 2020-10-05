@@ -2,7 +2,8 @@ import React from "react";
 
 function LoginModal(props) {
     return (
-        <div id="login-modal">
+        <div id="login-modal" className="center-modal">
+            {/* Change title depending on SignUp/LogIn */}
             <h2>{props.state.showSignup ? "Sign Up" : "Log In"}</h2>
             <input
                 type="text"
@@ -23,6 +24,7 @@ function LoginModal(props) {
                 minLength="4"
                 required
             />
+            {/* Show color selector IF signUp */}
             {props.state.showSignup && (
                 <div id="color-selector">
                     <p>pick a color :&nbsp;</p>
@@ -36,16 +38,15 @@ function LoginModal(props) {
                 </div>
             )}
             <div id="loginmodal-buttons">
+                {/* Handle Login or Signup depending on showSignup state */}
                 <input
                     type="button"
                     value={props.state.showSignup ? "Sign Up" : "Log In"}
-                    onClick={props.handleClick}
-                    className="button"
-                />
-                <input
-                    type="button"
-                    value="close"
-                    onClick={props.toggleModal}
+                    onClick={
+                        props.state.showSignup
+                            ? console.log("need to add signup function")
+                            : props.logIn
+                    }
                     className="button"
                 />
             </div>
