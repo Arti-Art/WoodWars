@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import Button from "./button";
 import TopBar from "./topbar";
+import Rules from "./rules";
 import LoginModal from "./loginmodal";
 import Leaderboard from "./leaderboard";
 import "../styles/overlay.css";
@@ -13,6 +14,7 @@ class Overlay extends React.Component {
             logged: false,
             showSignup: false,
             showLeaderboard: false,
+            showRules: false,
             email: "",
             password: "",
             color: "#FF0000",
@@ -22,6 +24,8 @@ class Overlay extends React.Component {
         this.logIn = this.logIn.bind(this);
         this.logOut = this.logOut.bind(this);
         this.toggleLeaderboard = this.toggleLeaderboard.bind(this);
+        // this.toggleModal = this.toggleModal.bind(this);
+        this.toggleRules = this.toggleRules.bind(this);
     }
     // componentDidMount() {
     //     console.log("component did mount");
@@ -50,16 +54,29 @@ class Overlay extends React.Component {
         this.setState({
             logged: false,
             showLeaderboard: false,
+            showRules: false,
         });
         console.log("state.logged set to false // You Logged Out");
     }
     toggleLeaderboard() {
         this.setState({
             showLeaderboard: !this.state.showLeaderboard,
+            showRules: false,
         });
         console.log("leaderbord TOGGLED!");
     }
-
+    toggleRules() {
+        this.setState({
+            showRules: !this.state.showRules,
+        });
+        console.log("RULES TOGGLED!");
+    }
+    // toggleModal(name) {
+    //     // const {name} = event.target;
+    //     this.setState({
+    //         [name]: !this.state.name,
+    //     });
+    // }
     render() {
         return (
             <div id="overlay">
@@ -68,7 +85,7 @@ class Overlay extends React.Component {
                 )}
                 <TopBar />
                 {this.state.logged && (
-                    <div id="hud">
+                    <>
                         <Button
                             value="Log Out"
                             handleClick={this.logOut}
@@ -81,14 +98,16 @@ class Overlay extends React.Component {
                         />
                         <Button
                             value="Game Rules"
-                            handleClick={this.toggleLeaderboard}
+                            name="showRules"
+                            handleClick={this.toggleRules}
                             className="button-rules"
                         />
-                    </div>
+                    </>
                 )}
                 {this.state.showLeaderboard && (
                     <Leaderboard state={this.state} />
                 )}
+                {this.state.showRules && <Rules state={this.state} />}
                 {!this.state.logged && (
                     <LoginModal
                         state={this.state}
