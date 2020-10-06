@@ -61,23 +61,33 @@ class Overlay extends React.Component {
     }
 
     render() {
-        // CONDITIONS >>>
-        // VERIFICATION:
-        console.log(`logged: ${this.state.logged}`);
-        // <<< CONDITIONS
         return (
             <div id="overlay">
                 {(!this.state.logged || this.state.showLeaderboard) && (
                     <div id="darken-map" />
                 )}
                 <TopBar />
-                {/* LogOut Button: Show if ModalLoginWindow isn't displayed */}
                 {this.state.logged && (
-                    <Button
-                        value="Log Out"
-                        handleClick={this.logOut}
-                        className="button-logout"
-                    />
+                    <div id="hud">
+                        <Button
+                            value="Log Out"
+                            handleClick={this.logOut}
+                            className="button-logout"
+                        />
+                        <Button
+                            value="Leaderboard"
+                            handleClick={this.toggleLeaderboard}
+                            className="button-leaderboard"
+                        />
+                        <Button
+                            value="Game Rules"
+                            handleClick={this.toggleLeaderboard}
+                            className="button-rules"
+                        />
+                    </div>
+                )}
+                {this.state.showLeaderboard && (
+                    <Leaderboard state={this.state} />
                 )}
                 {!this.state.logged && (
                     <LoginModal
@@ -86,17 +96,6 @@ class Overlay extends React.Component {
                         toggleSignup={this.toggleSignup}
                         logIn={this.logIn}
                     />
-                )}
-                {/* LeaderBoard Button: Show if Logged In */}
-                {this.state.logged && (
-                    <Button
-                        value="Leaderboard"
-                        handleClick={this.toggleLeaderboard}
-                        className="button-leaderboard"
-                    />
-                )}
-                {this.state.showLeaderboard && (
-                    <Leaderboard state={this.state} />
                 )}
             </div>
         );
