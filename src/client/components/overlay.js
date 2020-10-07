@@ -26,6 +26,7 @@ class Overlay extends React.Component {
         this.toggleLeaderboard = this.toggleLeaderboard.bind(this);
         // this.toggleModal = this.toggleModal.bind(this);
         this.toggleRules = this.toggleRules.bind(this);
+        this.closeModals = this.closeModals.bind(this);
     }
     // componentDidMount() {
     //     console.log("component did mount");
@@ -47,6 +48,7 @@ class Overlay extends React.Component {
     logIn() {
         this.setState({
             logged: true,
+            showRules: true,
         });
     }
     logOut() {
@@ -68,6 +70,12 @@ class Overlay extends React.Component {
             showLeaderboard: false,
         });
     }
+    closeModals() {
+        this.setState({
+            showRules: false,
+            showLeaderboard: false,
+        });
+    }
     // toggleModal(name) {
     //     // const {name} = event.target;
     //     this.setState({
@@ -77,9 +85,16 @@ class Overlay extends React.Component {
     render() {
         return (
             <div id="overlay">
+                {/* Show DarkenMap if a modal is open (NB: not logged=show login modal) */}
                 {(!this.state.logged ||
                     this.state.showLeaderboard ||
-                    this.state.showRules) && <div id="darken-map" />}
+                    this.state.showRules) && (
+                    <div
+                        id="darken-map"
+                        // onClick close all modals if Logged (not logged=>can't close login modal)
+                        onClick={this.state.logged && this.closeModals}
+                    />
+                )}
                 <TopBar />
                 {this.state.logged && (
                     <>

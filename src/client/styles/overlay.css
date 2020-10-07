@@ -123,6 +123,11 @@ button, .button {
     align-items: center;
 }
 .rules {
-    width: 85vw;
+    width: 90vw;
+    max-width: 700px;
     height: auto;
+}
+.rules p {
+    font-size: 20px;
+    margin-top: 15px;
 }
