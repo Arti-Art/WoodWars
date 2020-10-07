@@ -2,22 +2,29 @@ import React from "react";
 
 function Rules() {
     return (
-        <div>
+        <div className="rules center-modal flex-col pad-med border bgc-prim">
             <h2>Game Rules</h2>
             <p>
-                Achète des arbres pour te faire un max de feuilles! Achètes des
-                arbres avec tes nouvelles feuilles. Tu en auras des gratuits,
-                des payants et d'autres vérouillés par d'autres joueurs.
+                Dear capitalist, welcome to WoodWars! Your goal become the
+                wealthiest forest owner by winning an economic war involving
+                trees. Because what&apos;s the point of nature if it&apos;s not
+                profit, right?
             </p>
             <p>
-                Mais attention! Toutes les 15' tu recevras une quantité de
-                feuilles égale au total de chacun de tes arbres et toutes les
-                heures, tu perdras la moitié de tes feuilles!
+                Buy trees to achieve that goal. Each tree generates leaves over
+                time, which allows you to buy even more trees! You can even buy
+                the trees of other players, if you&apos;re willing to pay the
+                price. But beware, other players can also buy your trees. This
+                you can lock your trees (for a certain price of course).
             </p>
             <p>
-                N'hésites pas à consulter le classement pour voir la progression
-                des autres joueurs... ainsi que le Gamelog qui te permettras de
-                consulter toutes les actions du jeu.
+                Every 15 minutes you receive a number of leaves equivalent to
+                the total of your trees. And every hour, you lose half of your
+                leaves.
+            </p>
+            <p>
+                Check to leaderboard to compare your wealth to the top
+                capitalists.
             </p>
         </div>
     );

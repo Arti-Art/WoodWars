@@ -2,8 +2,11 @@ import React from "react";
 
 function Leaderboard() {
     return (
-        <div id="leaderboard" className="center-modal">
-            <h1>This is a leaderboard</h1>
+        <div className="leaderboard center-modal flex-col pad-med border bgc-prim">
+            <h1>Leaderboard</h1>
+            <p>Test entry</p>
+            <p>Test entry</p>
+            <p>Test entry</p>
         </div>
     );
 }

@@ -2,7 +2,7 @@ import React from "react";
 
 function LoginModal(props) {
     return (
-        <div id="login-modal" className="center-modal">
+        <div className="login-modal center-modal flex-col pad-med border bgc-prim">
             {/* Change title depending on SignUp/LogIn */}
             <h2>{props.state.showSignup ? "Sign Up" : "Log In"}</h2>
             <input

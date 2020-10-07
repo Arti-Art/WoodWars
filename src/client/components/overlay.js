@@ -48,7 +48,6 @@ class Overlay extends React.Component {
         this.setState({
             logged: true,
         });
-        console.log("state.logged set to true // You Logged In");
     }
     logOut() {
         this.setState({
@@ -56,20 +55,18 @@ class Overlay extends React.Component {
             showLeaderboard: false,
             showRules: false,
         });
-        console.log("state.logged set to false // You Logged Out");
     }
     toggleLeaderboard() {
         this.setState({
             showLeaderboard: !this.state.showLeaderboard,
             showRules: false,
         });
-        console.log("leaderbord TOGGLED!");
     }
     toggleRules() {
         this.setState({
             showRules: !this.state.showRules,
+            showLeaderboard: false,
         });
-        console.log("RULES TOGGLED!");
     }
     // toggleModal(name) {
     //     // const {name} = event.target;
@@ -80,9 +77,9 @@ class Overlay extends React.Component {
     render() {
         return (
             <div id="overlay">
-                {(!this.state.logged || this.state.showLeaderboard) && (
-                    <div id="darken-map" />
-                )}
+                {(!this.state.logged ||
+                    this.state.showLeaderboard ||
+                    this.state.showRules) && <div id="darken-map" />}
                 <TopBar />
                 {this.state.logged && (
                     <>
@@ -107,7 +104,7 @@ class Overlay extends React.Component {
                 {this.state.showLeaderboard && (
                     <Leaderboard state={this.state} />
                 )}
-                {this.state.showRules && <Rules state={this.state} />}
+                {this.state.showRules && <Rules />}
                 {!this.state.logged && (
                     <LoginModal
                         state={this.state}
