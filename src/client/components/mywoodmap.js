@@ -13,8 +13,18 @@ function MyWoodMap() {
         popupAnchor: [16, 0],
         iconSize: [38, 50],
     });
+    function logData(e) {
+        const zoom = e.zoom;
+        const coordinates = e.center;
+        console.log(`zoom is ${zoom}`);
+        console.log(`lat: ${coordinates[0]}, long:${coordinates[1]}`);
+    }
     return (
-        <Map id="leafletContainer" center={[50.6283, 5.5768]} zoom={16}>
+        <Map
+            id="leafletContainer"
+            center={[50.6283, 5.5768]}
+            zoom={16}
+            onViewportChanged={e => logData(e)}>
             <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

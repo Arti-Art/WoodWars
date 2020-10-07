@@ -8,7 +8,7 @@ function Rules() {
                 Dear capitalist, welcome to WoodWars! Your goal become the
                 wealthiest forest owner by winning an economic war involving
                 trees. Because what&apos;s the point of nature if it&apos;s not
-                profit, right?
+                profit?
             </p>
             <p>
                 Buy trees to achieve that goal. Each tree generates leaves over

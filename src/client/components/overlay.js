@@ -92,7 +92,9 @@ class Overlay extends React.Component {
                     <div
                         id="darken-map"
                         // onClick close all modals if Logged (not logged=>can't close login modal)
-                        onClick={this.state.logged && this.closeModals}
+                        onClick={
+                            this.state.logged ? this.closeModals : undefined
+                        }
                     />
                 )}
                 <TopBar />
