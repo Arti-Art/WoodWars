@@ -2,7 +2,7 @@ import React from "react";
 import {Map, Marker, Popup, TileLayer} from "react-leaflet";
 import L from "leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
-import arbustum from "../../../data/arbustums02.json";
+import arbustum from "../../../data/working_arbust.json";
 import "../styles/map.css";
 import treeImg from "./img/treeImg.png";
 
@@ -29,32 +29,28 @@ function MyWoodMap() {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             />
-            <MarkerClusterGroup disableClusteringAtZoom={17}>
+            <MarkerClusterGroup disableClusteringAtZoom={18}>
                 {arbustum.map(tree => (
                     <Marker
                         icon={treeIcon}
-                        key={tree.x_lambert72}
-                        position={[tree.geoloc.lat, tree.geoloc.lon]}>
+                        key={tree._id.$oid}
+                        position={[
+                            tree.location.coordinates[1],
+                            tree.location.coordinates[0],
+                        ]}>
                         <Popup>
-                            <strong>Name :</strong> {tree.nom_complet} <br />
-                            <strong>Hauteur :</strong>{" "}
-                            {tree.hauteur_totale || "unavailable"} <br />
-                            <strong>Diametre :</strong>{" "}
-                            {tree.diametre_cime || "unavailable"} <br />
-                            <strong>Circonférence :</strong>{" "}
-                            {tree.circonf || "unavailable"} <br />
-                            <strong>Geoloc :</strong>{" "}
-                            {`${tree.geoloc.lat}, ${tree.geoloc.lon}` ||
-                                "unavailable"}
+                            <a
+                                href={tree.wikipedia_page}
+                                rel="noreferrer"
+                                target="_blank">
+                                <h4>{tree.full_name}</h4>
+                            </a>
+                            <p>{`Height: ${tree.size.height}m`}</p>
+                            <p>{`Diameter: ${tree.size.diameter}cm`}</p>
+                            <p>{`Price: ${tree.value} leaves`}</p>
                         </Popup>
                     </Marker>
                 ))}
-                ;{/* Marker for Bryan's Home in Madagascar */}
-                <Marker
-                    icon={treeIcon}
-                    key={"Bryan"}
-                    position={[-18.926263, 47.544829]}
-                />
             </MarkerClusterGroup>
         </Map>
     );
