@@ -10,6 +10,8 @@ import express from "express";
 import path from "path";
 import connectDB from "./config/db";
 import authRoute from "./routes/auth";
+import testName from "./utilities/utilities";
+
 // Import des routes
 const treeRoutes = require("./routes/tree");
 const userRoutes = require("./routes/user");
@@ -38,3 +40,6 @@ app.use("/auth", authRoute);
 app.listen(APP_PORT, () =>
     console.log(`🚀 Server is listening on port ${APP_PORT}.`),
 );
+
+// BUY TREE
+app.get("/coucou", testName.buyTree);

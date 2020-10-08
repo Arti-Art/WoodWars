@@ -1,21 +1,21 @@
 const mongoose = require("mongoose");
 
 const treeSchema = new mongoose.Schema({
-    full_name: {type: String, required: true},
-    given_name: {type: String, required: true, default: null},
+    full_name: {type: String, required: false},
+    given_name: {type: String, required: false, default: null},
     size: {
-        height: {type: Number, required: true},
-        diameter: {type: Number, required: true},
+        height: {type: Number, required: false},
+        diameter: {type: Number, required: false},
     },
-    value: {type: Number, required: true},
+    value: {type: Number, required: false},
     geoloc: {
-        lat: {type: Number, required: true},
-        lon: {type: Number, required: true},
+        lat: {type: Number, required: false},
+        lon: {type: Number, required: false},
     },
     owner_id: {
         type: mongoose.ObjectId,
         ref: "Account",
-        required: true,
+        required: false,
         default: null,
     },
     is_locked: {type: Boolean, required: true, default: false},
@@ -33,18 +33,6 @@ const treeSchema = new mongoose.Schema({
             datetime: {type: Date, default: Date.now},
         },
     ],
-
-    // Old schema, to be removed from tree documents once updated
-    y_lambert72: {type: Number, required: true},
-    arbotag: {type: Number, required: true},
-    date_donnees: {type: Date, required: true},
-    x_lambda: {type: Number, required: true},
-    hauteur_totale: {type: Number, required: true},
-    x_lambert72: {type: Number, required: true},
-    y_phi: {type: Number, required: true},
-    nom_complet: {type: String, required: true},
-    diametre_cime: {type: Number, required: true},
-    circonf: {type: Number, required: true},
 });
 
 module.exports = mongoose.model("Tree", treeSchema);
