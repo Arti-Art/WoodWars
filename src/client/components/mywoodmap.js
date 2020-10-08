@@ -42,11 +42,19 @@ function MyWoodMap() {
                             <strong>Diametre :</strong>{" "}
                             {tree.diametre_cime || "unavailable"} <br />
                             <strong>Circonférence :</strong>{" "}
-                            {tree.circonf || "unavailable"}
+                            {tree.circonf || "unavailable"} <br />
+                            <strong>Geoloc :</strong>{" "}
+                            {`${tree.geoloc.lat}, ${tree.geoloc.lon}` ||
+                                "unavailable"}
                         </Popup>
                     </Marker>
                 ))}
-                ;
+                ;{/* Marker for Bryan's Home in Madagascar */}
+                <Marker
+                    icon={treeIcon}
+                    key={"Bryan"}
+                    position={[-18.926263, 47.544829]}
+                />
             </MarkerClusterGroup>
         </Map>
     );

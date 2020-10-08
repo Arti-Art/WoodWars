@@ -14,13 +14,14 @@ function Rules() {
                 Buy trees to achieve that goal. Each tree generates leaves over
                 time, which allows you to buy even more trees! You can even buy
                 the trees of other players, if you&apos;re willing to pay the
-                price. But beware, other players can also buy your trees. This
-                you can lock your trees (for a certain price of course).
+                price. But beware, other players can also buy your trees. To
+                avoid this, you can lock your trees (for a certain price of
+                course).
             </p>
             <p>
-                Every 15 minutes you receive a number of leaves equivalent to
-                the total of your trees. And every hour, you lose half of your
-                leaves.
+                Every 15 minutes you receive a number of leaves proportional to
+                the total of the trees you own. And every hour, you lose half of
+                your leaves.
             </p>
             <p>
                 Check to leaderboard to compare your wealth to the top
