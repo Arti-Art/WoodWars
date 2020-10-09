@@ -24,7 +24,6 @@ class Overlay extends React.Component {
         this.logIn = this.logIn.bind(this);
         this.logOut = this.logOut.bind(this);
         this.toggleLeaderboard = this.toggleLeaderboard.bind(this);
-        // this.toggleModal = this.toggleModal.bind(this);
         this.toggleRules = this.toggleRules.bind(this);
         this.closeModals = this.closeModals.bind(this);
     }
@@ -76,12 +75,6 @@ class Overlay extends React.Component {
             showLeaderboard: false,
         });
     }
-    // toggleModal(name) {
-    //     // const {name} = event.target;
-    //     this.setState({
-    //         [name]: !this.state.name,
-    //     });
-    // }
     render() {
         return (
             <div id="overlay">
