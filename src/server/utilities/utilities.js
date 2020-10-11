@@ -1,8 +1,8 @@
-// mongoose et modele des arbres et fantasy random ta mere         tree.find(tree.given_name)
 import {nameByRace} from "fantasy-name-generator";
 import Tree from "../models/tree";
 import User from "../models/user";
-import Gamelog from "../models/gamelog";
+import Gamelog, {replaceOne} from "../models/gamelog";
+import user from "../models/user";
 let tabRace = [
     "angel",
     "cavePerson",
@@ -33,62 +33,149 @@ exports.testName = async (treeId) => {
     return treeName.given_name;
 };
 
-// RECUP ID USER , ID ARBRE , FUNCTION BYAAAA
+exports.insertToGamelog = async (logType, userId, treeId, message) => {
+    try {
+        const newLog = new Gamelog({
+            type: logType,
+            user_id: userId,
+            tree_id: treeId,
+            message: message,
+        });
+        await newLog.save();
+
+        console.log({infos: [{msg: "Insertion to gamelog has succeeded."}]});
+    } catch (err) {
+        console.log({errors: [{msg: "Insertion to gamelog has failed."}]});
+    }
+};
 
 exports.buyTree = async (req, res, next) => {
     const userId = req.body.userId;
     const treeId = req.body.treeId;
+    console.log(`user id : ${userId}`);
+    console.log(`tree id : ${treeId}`);
     let user = await User.findById(userId);
     let tree = await Tree.findById(treeId);
-    let alltree = await Tree.find();
+    let treeOwner = String(tree.owner_id);
+    let OwnerOfTree = await User.findById(tree.owner_id);
     let userLeaves = user.number_of_leaves;
     let treeCost = tree.value;
-    let treeOwner = String(tree.owner_id);
+
     let lock = tree.is_locked;
 
     if (tree.owner_id) {
         if (treeOwner === userId) {
-            // res.json({msg: "you're the owner of this tree"});
-            res.json({tree});
+            res.json({msg: "you're the owner of this tree"});
+
             // console.log(alltree);
         } else {
             if (lock === true) {
                 res.json({msg: "you can't buy it, is LOCK"});
             } else {
-                const treeAround = alltree
-                    .aggregate([
-                        {
-                            $geoNear: {
-                                near: {
-                                    type: "Point",
-                                    coordinates: ["5.580591", "50.651524"],
-                                },
-                                distanceField: "distance.calculated",
-                                maxDistance: 300,
+                const surroundingTrees = await Tree.find({
+                    location: {
+                        $near: {
+                            $maxDistance: 100,
+                            $geometry: {
+                                type: "Point",
+                                coordinates: [
+                                    tree.location.coordinates[0],
+                                    tree.location.coordinates[1],
+                                ],
                             },
                         },
-                    ])
-                    .toArray();
-                res.json({treeAround});
+                    },
+                });
+                // amount of tree 100m
+                let amountTree = surroundingTrees.length;
+                console.log(`amount of tree in 100m : ${amountTree}`);
+
+                // value of all your tree in 100m
+                let valueMyTrees = surroundingTrees
+                    .filter(({owner_id}) => owner_id == userId)
+                    .reduce((sum, myTree) => sum + myTree.value, 0);
+                console.log(`value of all your tree in 100m : ${valueMyTrees}`);
+                // value of all the targetted player's trees in 100m radius
+                let allTargettedPlayerTrees = parseInt(
+                    surroundingTrees
+                        .filter(({owner_id}) => owner_id == treeOwner)
+                        .reduce((sum, treeAdd) => sum + treeAdd.value, 0),
+                );
+                // + tree.value;
+                console.log(
+                    `value of all the targetted player's trees in 100m radius :${allTargettedPlayerTrees}`,
+                );
+                console.log(tree.owner_id);
+
+                //amount of tree of targetted player in 100m radius
+                let targettedPlayerTrees = surroundingTrees.filter(
+                    ({owner_id}) => owner_id == treeOwner,
+                );
+                let numberTargettedPlayerTrees = parseInt(
+                    targettedPlayerTrees.length,
+                );
+
+                console.log(
+                    `number of tree for the targetted player:${numberTargettedPlayerTrees}`,
+                );
+                // value of all the other players trees in 100m radius
+                let valueAllPlayersTree = parseInt(
+                    surroundingTrees
+                        .filter(({owner_id}) => owner_id)
+                        .reduce((sum, treeAdd) => sum + treeAdd.value, 0),
+                );
+
+                let finalAmount =
+                    parseInt(tree.value) +
+                    (allTargettedPlayerTrees * amountTree) /
+                        numberTargettedPlayerTrees +
+                    valueAllPlayersTree -
+                    valueMyTrees;
+
+                if (userLeaves > finalAmount) {
+                    tree.owner_id = userId;
+                    user.number_of_leaves = user.number_of_leaves - finalAmount;
+                    user.number_of_trees = parseInt(user.number_of_trees) + 1;
+                    OwnerOfTree.number_of_trees =
+                        parseInt(OwnerOfTree.number_of_trees) - 1;
+                    tree.transactions_history.push({
+                        user_id: userId,
+                        price: finalAmount,
+                    });
+                    tree.transactions_history.price = finalAmount;
+
+                    await tree.save();
+                    await user.save();
+                    await OwnerOfTree.save();
+                    await exports.insertToGamelog(
+                        "purchase",
+                        userId,
+                        treeId,
+                        "purchased a tree",
+                    );
+                    await exports.insertToGamelog(
+                        "purchase",
+                        userId,
+                        treeId,
+                        "lost a tree",
+                    );
+                    // {owner_id: ObjectId('5f73770653ac1f0d0081566f')}
+                    // {owner_id: ObjectId('5f81b0c08e42093fa9e10372')}
+                    // dolni :   5f81b0c08e42093fa9e10372
+                    // MM :      5f73770653ac1f0d0181566f
+                    res.json({msg: "You bought this tree"});
+                } else {
+                    res.json({msg: "You don't have enough leaves..."});
+                }
             }
         }
     } else {
-        // "[value of the targetted tree"
-        //  +
-        // "[value of all the targetted player's trees in 100m radius]"
-        //  ×
-        // "[amount of trees in 100m radius]"
-        //  /
-        // "[amount of tree of targetted player in 100m radius]"
-        //  +
-        // "[value of all the other players trees in 100m radius]"
-        //  -
-        // "[value of all your tree in 100m radius]"
         if (userLeaves > treeCost) {
             let newName = await exports.testName(treeId);
             tree.owner_id = userId;
             user.number_of_leaves = user.number_of_leaves - treeCost;
             user.number_of_trees = user.number_of_trees + 1;
+            tree.transactions_history.user_id = userId;
             await tree.save();
             await user.save();
 
@@ -104,5 +191,113 @@ exports.buyTree = async (req, res, next) => {
             });
             await log.save();
         }
+    }
+};
+
+exports.leaderboardLeaves = async (req, res, next) => {
+    try {
+        let users = await User.find().sort({number_of_leaves: -1}).limit(10);
+        res.json({users});
+    } catch (err) {
+        console.log({errors: [{msg: "leaderbords has failed."}]});
+    }
+};
+exports.leaderboardTrees = async (req, res, next) => {
+    try {
+        let users = await User.find().sort({number_of_trees: -1}).limit(10);
+        res.json({users});
+    } catch (err) {
+        console.log({errors: [{msg: "leaderbords has failed."}]});
+    }
+};
+
+exports.treePrice = async (req, res, next) => {
+    const userId = req.body.userId;
+    const treeId = req.body.treeId;
+    console.log(`user id : ${userId}`);
+    console.log(`tree id : ${treeId}`);
+    let user = await User.findById(userId);
+    let tree = await Tree.findById(treeId);
+    let treeOwner = String(tree.owner_id);
+    let lock = tree.is_locked;
+
+    if (tree.owner_id) {
+        if (treeOwner === userId) {
+            res.json({msg: " YOURS"});
+
+            // console.log(alltree);
+        } else {
+            if (lock === true) {
+                res.json({msg: "LOCK"});
+            } else {
+                const surroundingTrees = await Tree.find({
+                    location: {
+                        $near: {
+                            $maxDistance: 100,
+                            $geometry: {
+                                type: "Point",
+                                coordinates: [
+                                    tree.location.coordinates[0],
+                                    tree.location.coordinates[1],
+                                ],
+                            },
+                        },
+                    },
+                });
+                // amount of tree 100m
+                let amountTree = surroundingTrees.length;
+                console.log(`amount of tree in 100m : ${amountTree}`);
+
+                // value of all your tree in 100m
+                let valueMyTrees = surroundingTrees
+                    .filter(({owner_id}) => owner_id == userId)
+                    .reduce((sum, myTree) => sum + myTree.value, 0);
+                console.log(`value of all your tree in 100m : ${valueMyTrees}`);
+                // value of all the targetted player's trees in 100m radius
+                let allTargettedPlayerTrees = parseInt(
+                    surroundingTrees
+                        .filter(({owner_id}) => owner_id == treeOwner)
+                        .reduce((sum, treeAdd) => sum + treeAdd.value, 0),
+                );
+                // + tree.value;
+                console.log(
+                    `value of all the targetted player's trees in 100m radius :${allTargettedPlayerTrees}`,
+                );
+                console.log(tree.owner_id);
+
+                //amount of tree of targetted player in 100m radius
+                let targettedPlayerTrees = surroundingTrees.filter(
+                    ({owner_id}) => owner_id == treeOwner,
+                );
+                let numberTargettedPlayerTrees = parseInt(
+                    targettedPlayerTrees.length,
+                );
+
+                console.log(
+                    `number of tree for the targetted player:${numberTargettedPlayerTrees}`,
+                );
+                // value of all the other players trees in 100m radius
+                let valueAllPlayersTree = parseInt(
+                    surroundingTrees
+                        .filter(({owner_id}) => owner_id)
+                        .reduce((sum, treeAdd) => sum + treeAdd.value, 0),
+                );
+
+                let finalAmount =
+                    parseInt(tree.value) +
+                    (allTargettedPlayerTrees * amountTree) /
+                        numberTargettedPlayerTrees +
+                    valueAllPlayersTree -
+                    valueMyTrees;
+
+                // {owner_id: ObjectId('5f73770653ac1f0d0081566f')}
+                // {owner_id: ObjectId('5f81b0c08e42093fa9e10372')}
+                // dolni :   5f81b0c08e42093fa9e10372
+                // MM :      5f73770653ac1f0d0181566f
+                res.json({msg: finalAmount});
+            }
+        }
+    } else {
+        res.json({msg: tree.value});
     }
 };

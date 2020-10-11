@@ -43,3 +43,7 @@ app.listen(APP_PORT, () =>
 
 // BUY TREE
 app.get("/coucou", testName.buyTree);
+app.get("/treePrice", testName.treePrice);
+
+app.get("/leaderLeaves", testName.leaderboardLeaves);
+app.get("/leaderTrees", testName.leaderboardTrees);
